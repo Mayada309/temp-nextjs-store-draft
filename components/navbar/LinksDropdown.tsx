@@ -9,6 +9,9 @@ import { LuAlignLeft } from 'react-icons/lu';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { links } from '@/utils/links';
+import UserIcon from './UserIcon';
+import { SignedOut, SignedIn, SignInButton, SignUpButton } from '@clerk/nextjs';
+import SignOutLink from './SignOutLink';
 
 function LinksDropdown() {
   return (
@@ -16,20 +19,40 @@ function LinksDropdown() {
       <DropdownMenuTrigger asChild>
         <Button
           variant='outline'
-          size={'icon'}
-          className='flex gap-4 max-w-[100px]'
+          size={'sm'}
+          className='flex justify-center items-center gap-2 max-w-[100px]'
         >
           <LuAlignLeft className='w-6 h-6' />
+          <UserIcon />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-48' align='start' sideOffset={10}>
-        {links.map((link) => (
-          <DropdownMenuItem key={link.href}>
-            <Link href={link.href} passHref className='capitalize'>
-              {link.label}
-            </Link>
+        <SignedOut>
+          <DropdownMenuItem>
+            <SignInButton mode='modal'>
+              <button className='w-full text-left'>Login</button>
+            </SignInButton>
           </DropdownMenuItem>
-        ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <SignUpButton mode='modal'>
+              <button className='w-full text-left'>Register</button>
+            </SignUpButton>
+          </DropdownMenuItem>
+        </SignedOut>
+        <SignedIn>
+          {links.map((link) => (
+            <DropdownMenuItem key={link.href}>
+              <Link href={link.href} passHref className='capitalize'>
+                {link.label}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <SignOutLink />
+          </DropdownMenuItem>
+        </SignedIn>
       </DropdownMenuContent>
     </DropdownMenu>
   );

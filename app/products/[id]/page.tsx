@@ -5,7 +5,6 @@ import { formatCurrency } from '@/utils/format';
 import FavouriteToggleButton from '@/components/products/FavouriteToggleButton';
 import AddToCart from '@/components/single-product/AddToCart';
 import ProductRating from '@/components/single-product/ProductRating';
-import { use } from 'react';
 
 type Params = Promise<{ id: string }>;
 
